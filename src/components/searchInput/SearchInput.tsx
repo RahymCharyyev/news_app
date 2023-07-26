@@ -1,5 +1,5 @@
 import Search from "antd/es/input/Search";
-import { searchNews } from "../api/searchNews/searchNews";
+import { searchNews } from "../../api/searchNews/searchNews";
 
 const SearchInput = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -14,10 +14,11 @@ const SearchInput = () => {
 
   return (
     <Search
-      placeholder="Search the news"
+      placeholder="Search news by theme"
       allowClear
+      enterButton="Search"
       onSearch={onSearch}
-      style={{ width: 200 }}
+      style={{ width: 250 }}
       size="middle"
     />
   );

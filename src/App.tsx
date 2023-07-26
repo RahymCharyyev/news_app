@@ -1,18 +1,18 @@
-import { Route, Router, Routes } from "react-router";
-import TheFooter from "./components/TheFooter";
-import TheHeader from "./components/TheHeader";
-import Main from "./pages/home/Main";
-import Favorites from "./pages/favorites/Favorites";
+import { Route, Routes } from "react-router";
+import TheFooter from "./components/footer/TheFooter";
+import TheHeader from "./components/header/TheHeader";
+import Home from "./pages/home/Home";
+import TopNews from "./pages/topNews/TopNews";
+import Sources from "./pages/sources/Sources";
 
 function App() {
   return (
     <>
       <TheHeader />
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/favorites" element={<Favorites />} />
-        {/* <Route path="/about" element={<About />} /> */}
-        {/* <Route path="/blog" element={<Blog />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/top-news" element={<TopNews />} />
+        <Route path="/sources" element={<Sources />} />
       </Routes>
       <TheFooter />
     </>

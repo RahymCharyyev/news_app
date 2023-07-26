@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
-import News from "../../components/News";
+import News from "../../components/news/News";
 
 const Main = () => {
   return (

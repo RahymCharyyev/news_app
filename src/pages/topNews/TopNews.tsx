@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 // import News from "../../components/News";
 
-const Favorites = () => {
+const TopNews = () => {
   return (
     <Layout>
       <Content style={{ margin: "24px 16px" }}>{/* <News /> */}</Content>
@@ -10,4 +10,4 @@ const Favorites = () => {
   );
 };
 
-export default Favorites;
+export default TopNews;

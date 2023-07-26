@@ -6,9 +6,10 @@ import {
   LoadingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { formatDate } from "../utils/formatDate";
-import { NewsArticle } from "../types/newsInterfaces";
-import { fetchNews } from "../api/news/fetchNews";
+import { formatDate } from "../../utils/formatDate";
+import { NewsArticle } from "../../types/newsInterfaces";
+import { fetchNews } from "../../api/news/fetchNews";
+import SearchInput from "../searchInput/SearchInput";
 
 const News = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
@@ -46,11 +47,12 @@ const News = () => {
         <p>Failed to fetch news data.</p>
       ) : news.length > 0 ? (
         <>
+          <SearchInput />
           <List
             itemLayout="vertical"
             size="large"
             pagination={{
-              pageSize: 3,
+              pageSize: 4,
               showSizeChanger: false,
             }}
             dataSource={news}
