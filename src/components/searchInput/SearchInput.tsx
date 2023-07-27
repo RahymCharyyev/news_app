@@ -1,8 +1,8 @@
-import { Input } from "antd";
+import Search from "antd/es/input/Search";
 
 const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
   return (
-    <Input.Search
+    <Search
       placeholder="Search news by theme"
       allowClear
       enterButton="Search"

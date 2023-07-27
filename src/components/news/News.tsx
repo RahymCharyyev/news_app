@@ -9,17 +9,22 @@ import {
 import { formatDate } from "../../utils/formatDate";
 import { useNews } from "../../hooks/useNews";
 import SearchInput from "../searchInput/SearchInput";
-import axiosInstance from "../../api/axiosInstance";
+import SortSelect from "../sortSelect/SortSelect";
 
 const News = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [keyword, setKeyword] = useState("keyword");
+  const [sort, setSort] = useState("popularity");
 
   const handleSearch = (value: string) => {
     setKeyword(value);
   };
 
-  const { data, isLoading, isError } = useNews(apiKey, keyword, axiosInstance);
+  const handleSort = (value: string) => {
+    setSort(value);
+  };
+
+  const { data, isLoading, isError } = useNews(apiKey, keyword, sort);
 
   if (isLoading) {
     return <LoadingOutlined style={{ fontSize: 48, alignItems: "center" }} />;
@@ -40,7 +45,10 @@ const News = () => {
     <>
       {data && data.length > 0 ? (
         <>
-          <SearchInput onSearch={handleSearch} />
+          <Space>
+            <SearchInput onSearch={handleSearch} />
+            <SortSelect onChange={handleSort} />
+          </Space>
           <List
             itemLayout="vertical"
             size="large"

@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { NewsArticle } from "../types/newsInterfaces";
 import { fetchNews } from "../api/news/fetchNews";
-import { AxiosInstance } from "axios";
+import axiosInstance from "../api/axiosInstance";
 
-export const useNews = (
-  apiKey: string,
-  keyword: string,
-  axiosInstance: AxiosInstance
-) => {
-  return useQuery<NewsArticle[], Error>(
-    ["news", apiKey, keyword, axiosInstance],
-    () => fetchNews(apiKey, keyword, axiosInstance)
+export const useNews = (apiKey: string, keyword: string, sort: string) => {
+  return useQuery(
+    ["news", apiKey, keyword, sort],
+    () => fetchNews(apiKey, keyword, sort, axiosInstance),
+    {
+      enabled: !!sort,
+    }
   );
 };
