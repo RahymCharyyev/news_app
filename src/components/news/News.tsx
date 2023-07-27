@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, List, Space } from "antd";
+import React, { useState } from "react";
+import { Button, List, Space, Image } from "antd";
 import {
   HistoryOutlined,
   InfoCircleOutlined,
@@ -7,30 +7,27 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { formatDate } from "../../utils/formatDate";
-import { NewsArticle } from "../../types/newsInterfaces";
-import { fetchNews } from "../../api/news/fetchNews";
+import { useNews } from "../../hooks/useNews";
 import SearchInput from "../searchInput/SearchInput";
+import axiosInstance from "../../api/axiosInstance";
 
 const News = () => {
-  const [news, setNews] = useState<NewsArticle[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const apiKey = import.meta.env.VITE_API_KEY;
+  const [keyword, setKeyword] = useState("keyword");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const newsData = await fetchNews(apiKey);
-        setNews(newsData);
-        setLoading(false);
-      } catch (error) {
-        setError(true);
-        setLoading(false);
-      }
-    };
+  const handleSearch = (value: string) => {
+    setKeyword(value);
+  };
 
-    fetchData();
-  }, [apiKey]);
+  const { data, isLoading, isError } = useNews(apiKey, keyword, axiosInstance);
+
+  if (isLoading) {
+    return <LoadingOutlined style={{ fontSize: 48, alignItems: "center" }} />;
+  }
+
+  if (isError) {
+    return <div>Error occurred while fetching news data.</div>;
+  }
 
   const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
     <Space>
@@ -41,13 +38,9 @@ const News = () => {
 
   return (
     <>
-      {loading ? (
-        <LoadingOutlined style={{ alignItems: "center" }} />
-      ) : error ? (
-        <p>Failed to fetch news data.</p>
-      ) : news.length > 0 ? (
+      {data && data.length > 0 ? (
         <>
-          <SearchInput />
+          <SearchInput onSearch={handleSearch} />
           <List
             itemLayout="vertical"
             size="large"
@@ -55,7 +48,7 @@ const News = () => {
               pageSize: 4,
               showSizeChanger: false,
             }}
-            dataSource={news}
+            dataSource={data}
             renderItem={(item) => (
               <List.Item
                 key={item.title}
@@ -80,7 +73,7 @@ const News = () => {
                   </Button>,
                 ]}
                 extra={
-                  <img width={272} alt={item.title} src={item.urlToImage} />
+                  <Image width={300} src={item.urlToImage} alt={item.title} />
                 }
               >
                 <List.Item.Meta

@@ -1,24 +1,13 @@
-import Search from "antd/es/input/Search";
-import { searchNews } from "../../api/searchNews/searchNews";
+import { Input } from "antd";
 
-const SearchInput = () => {
-  const apiKey = import.meta.env.VITE_API_KEY;
-  const onSearch = async (value: string) => {
-    try {
-      const articles = await searchNews(apiKey, value);
-      console.log(articles);
-    } catch (error) {
-      console.error("Failed to fetch news data.");
-    }
-  };
-
+const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
   return (
-    <Search
+    <Input.Search
       placeholder="Search news by theme"
       allowClear
       enterButton="Search"
-      onSearch={onSearch}
-      style={{ width: 250 }}
+      onSearch={(value) => onSearch(value)}
+      style={{ width: 280 }}
       size="middle"
     />
   );
